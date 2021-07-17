@@ -90,7 +90,7 @@ func (cli *CommandLine) run() {
 	printChainCmd := flag.NewFlagSet("printchain", flag.ExitOnError)
 
 	getBalanceAddr := getBalanceCmd.String("address", "", "The address for enquired wallet")
-	createBlockchainAddr := createBlockchainCmd.String("address", "Address of init.")
+	createBlockchainAddr := createBlockchainCmd.String("address", "", "Address of init.")
 	sendFrom := sendCmd.String("from", "", "Source wallet address")
 	sendTo := sendCmd.String("to", "", "Destination wallet address")
 	sendAmt := sendCmd.Int("amount", 0, "Amount to send")
