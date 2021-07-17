@@ -2,7 +2,7 @@
 FROM golang:latest
 
 # setting working dirrectory
-WORKDIR /go/src/app
+WORKDIR /go/src/go-blockchains
 # copying programs in working dir.
 COPY ./src .
 
