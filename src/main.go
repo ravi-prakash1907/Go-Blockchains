@@ -16,7 +16,7 @@ type CommandLine struct {
 }
 
 func (cli *CommandLine) printUsage() {
-	fmt.Println("Usage:")
+	fmt.Println("\nUsage:")
 	fmt.Println(" add-block BLOCK_DATA - add a block to the chain")
 	fmt.Println(" print - Print the blocks in the chain")
 }
@@ -40,6 +40,7 @@ func (cli *CommandLine) printChain() {
 	for {
 		block := iter.Next()
 
+		fmt.Println()
 		fmt.Printf("Previous Hash: %x\n", block.PrevHash)
 		fmt.Printf("Data in Block: %s\n", block.Data)
 		fmt.Printf("This Hash: %x\n", block.Hash)
@@ -47,7 +48,6 @@ func (cli *CommandLine) printChain() {
 		// for pow
 		pow := blockchain.NewProof(block)
 		fmt.Printf("PoW: %s\n", strconv.FormatBool(pow.Validate()))
-		fmt.Println()
 
 		if len(block.PrevHash) == 0 { // @Genesis
 			break
