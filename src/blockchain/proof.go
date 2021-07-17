@@ -3,17 +3,17 @@
 package blockchain
 
 import (
-	"math"
+	"bytes"
+	"crypto/sha256"
+	"encoding/binary"
 	"fmt"
 	"log"
-	"bytes"
-	"encoding/binary"
+	"math"
 	"math/big"
-	"crypto/sha256"
 )
-// forcing network to work by adding a block to the chain 
-// it secure too
 
+// forcing network to work by adding a block to the chain
+// it secure too
 
 // take the data from block
 
@@ -26,10 +26,10 @@ import (
 // Requirements:
 // 1. initial few bytes must be 0s (aks in case of bitcoin's hash-cash, it required initial 20-bits to be 0s)
 
-const Difficulty = 18 //12 // in real BC, algos. gradually keep on increasing the Values as more blocks added
+const Difficulty = 12 // in real BC, algos. gradually keep on increasing the Values as more blocks added
 
 type ProofOfWork struct {
-	Block *Block
+	Block  *Block
 	Target *big.Int // know more aboyt bytes and big-int in go
 }
 
@@ -69,17 +69,17 @@ func (pow *ProofOfWork) Run() (int, []byte) {
 		hash := sha256.Sum256(data)
 
 		fmt.Printf("\r%x", hash)
-		
+
 		intHash.SetBytes(hash[:])
 
 		if intHash.Cmp(pow.Target) == -1 {
 			fmt.Println()
 			return nonce, hash[:]
 		} else {
-			nonce = nonce+1;
+			nonce = nonce + 1
 		}
 	}
-	
+
 	return nonce, hash[:]
 }
 
@@ -105,4 +105,3 @@ func ToHex(num int64) []byte {
 
 	return buff.Bytes()
 }
-
