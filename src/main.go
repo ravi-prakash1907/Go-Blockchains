@@ -8,7 +8,7 @@ import (
 	"runtime"
 	"strconv"
 
-	"github.com/ravi-prakash1907/golang-walkthrough/Golang-Programs/src/blockchains/blockchain"
+	"github.com/ravi-prakash1907/go-blockchains/src/blockchain"
 )
 
 type CommandLine struct {
