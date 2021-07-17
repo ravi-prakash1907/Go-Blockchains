@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/ravi-prakash1907/go-blockchains/src/blockchain"
+	"github.com/ravi-prakash1907/go-blockchains/blockchain"
 )
 
 func main() {
