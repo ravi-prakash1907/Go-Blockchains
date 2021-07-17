@@ -29,7 +29,7 @@ type BlockChainIterator struct {
 
 // id DB exists
 func DBexists() bool {
-	if _, err := os.Stat(dbFile); os.IsNotExist() {
+	if _, err := os.Stat(dbFile); os.IsNotExist(err) {
 		return false
 	}
 
@@ -98,7 +98,7 @@ func ContinueBlockchain(address string) *BlockChain {
 	return &blockchain
 }
 
-func (chain *BlockChain) AddBlock(transactions []*Transactions) {
+func (chain *BlockChain) AddBlock(transactions []*Transaction) {
 	var lastHash []byte
 
 	err := chain.Database.View(func(txn *badger.Txn) error {
@@ -163,7 +163,7 @@ func (chain *BlockChain) FindUnspentTransactions(address string) []Transaction {
 	for {
 		block := iter.Next()
 
-		for _, tx := range block.Ttansactions {
+		for _, tx := range block.Transactions {
 			txID := hex.EncodeToString(tx.ID)
 
 		Outputs:
@@ -176,14 +176,14 @@ func (chain *BlockChain) FindUnspentTransactions(address string) []Transaction {
 					}
 				}
 				if out.CanBeUnlocked(address) { // if yes, means till not unlocked i.e. spent
-					unspentTxn = append(unspentTxn, *tx)
+					unspentTxs = append(unspentTxs, *tx)
 				}
 			}
 			if tx.IsCoinbase() == false {
 				for _, in := range tx.Inputs {
 					if in.CanUnlock(address) {
 						inTxID := hex.EncodeToString(in.ID)
-						spentTXOs[inTxID] = append(spentTXOs[inTcID], in.Out)
+						spentTXOs[inTxID] = append(spentTXOs[inTxID], in.Out)
 					}
 				}
 			}
@@ -218,7 +218,7 @@ func (chain *BlockChain) FindSpendableTransactions(address string, amount int) (
 
 Work:
 	for _, tx := range unspentTxs {
-		txID := hex.EncodeToString(tx, ID)
+		txID := hex.EncodeToString(tx.ID)
 
 		for outIdx, out := range tx.Outputs {
 			if out.CanBeUnlocked(address) && accumulated < amount {

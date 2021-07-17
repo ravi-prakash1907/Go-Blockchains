@@ -29,7 +29,7 @@ func (b *Block) HashTransactions() []byte {
 }
 
 func CreateBlock(txs []*Transaction, prevHash []byte) *Block {
-	block := &Block{[]byte{}, []byte(txs), prevHash, 0}
+	block := &Block{[]byte{}, txs, prevHash, 0}
 	// running pow algo
 	pow := NewProof(block)
 	nonce, hash := pow.Run()

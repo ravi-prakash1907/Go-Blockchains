@@ -56,9 +56,9 @@ func NewTransaction(from, to string, amount int, chain *BlockChain) *Transaction
 		txID, err := hex.DecodeString(txid)
 		Handle(err)
 
-		for _, out := range validOutputs {
+		for _, out := range outs {
 			input := TxInput{txID, out, from}
-			inputs := append(inputs, input)
+			inputs = append(inputs, input)
 		}
 	}
 
@@ -68,7 +68,7 @@ func NewTransaction(from, to string, amount int, chain *BlockChain) *Transaction
 		outputs = append(outputs, TxOutput{acc - amount, from})
 	}
 
-	tx := Transaction(nil, inputs, outputs)
+	tx := Transaction{nil, inputs, outputs}
 	tx.SetID()
 
 	return &tx
