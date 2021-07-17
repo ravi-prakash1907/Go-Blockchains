@@ -9,10 +9,10 @@ import (
 // each block gonna have a data along with a hash
 // this block will attatch to last (previous) block
 type Block struct {
-	Hash     []byte // hash of this block
-	Data     []byte // data (ledger, doc ets) in this block
-	PrevHash []byte // last block's hash
-	Nonce    int    // to store nonce for validation implemtation
+	Hash         []byte         // hash of this block
+	Transactions []*Transaction // for coin based txn (ledger, doc ets) in this block
+	PrevHash     []byte         // last block's hash
+	Nonce        int            // to store nonce for validation implemtation
 }
 
 func CreateBlock(data string, prevHash []byte) *Block {
