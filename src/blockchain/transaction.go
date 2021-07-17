@@ -4,6 +4,7 @@ package blockchain
 import (
 	"bytes"
 	"crypto/sha256"
+	"encoding/gob"
 	"encoding/hex"
 	"fmt"
 	"log"
@@ -28,7 +29,6 @@ type TxInput struct {
 	// sig is a script provides data i.e. used in output
 	Sig string // currently it'll be common thing
 }
-
 
 func (tx *Transaction) SetID() {
 	var encoded bytes.Buffer
@@ -76,12 +76,12 @@ func NewTransaction(from, to string, amount int, chain *BlockChain) *Transaction
 
 func CoinBaseTx(to, data string) *Transaction {
 	if data == "" {
-		data = fmt.Sprintf(("Coins to %s", to))
+		data = fmt.Sprintf("Coins to %s", to)
 	}
 
 	txin := TxInput{[]byte{}, -1, data}
 	// if jack mines this block, hell get 100 coins
-	txout := TxOutput{100,to} 
+	txout := TxOutput{100, to}
 
 	tx := Transaction{nil, []TxInput{txin}, []TxOutput{txout}}
 	tx.SetID()
@@ -101,4 +101,3 @@ func (in *TxInput) CanUnlock(data string) bool {
 func (out *TxOutput) CanBeUnlocked(data string) bool {
 	return out.PubKey == data
 }
-

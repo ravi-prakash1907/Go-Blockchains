@@ -1,6 +1,7 @@
 package blockchain
 
 import (
+	"encoding/hex"
 	"fmt"
 	"os"
 	"runtime"
@@ -84,7 +85,7 @@ func ContinueBlockchain(address string) *BlockChain {
 	db, err := badger.Open(opts)
 	Handle(err)
 
-	err = db.Update(finc(txn *badger.Txn) errorfunc(txn *badger.Txn) error {
+	err = db.Update(func(txn *badger.Txn) error {
 		item, err := txn.Get([]byte("lh"))
 		Handle(err)
 		lastHash, err = item.Value()
@@ -165,10 +166,10 @@ func (chain *BlockChain) FindUnspentTransactions(address string) []Transaction {
 		for _, tx := range block.Ttansactions {
 			txID := hex.EncodeToString(tx.ID)
 
-			Outputs:
+		Outputs:
 			for outIdx, out := range tx.Outputs {
-				if spentTXO[txID] != nil {
-					for _, spentOut == outTXOs[txID] {
+				if spentTXOs[txID] != nil {
+					for _, spentOut := range spentTXOs[txID] {
 						if spentOut == outIdx {
 							continue Outputs
 						}
@@ -188,7 +189,7 @@ func (chain *BlockChain) FindUnspentTransactions(address string) []Transaction {
 			}
 		}
 
-		if len(block.PrevHash) == 0{
+		if len(block.PrevHash) == 0 {
 			break
 		}
 	}
@@ -215,9 +216,9 @@ func (chain *BlockChain) FindSpendableTransactions(address string, amount int) (
 	unspentTxs := chain.FindUnspentTransactions(address)
 	accumulated := 0
 
-	Work:
+Work:
 	for _, tx := range unspentTxs {
-		txID := hex.EncodeToString(tx,ID)
+		txID := hex.EncodeToString(tx, ID)
 
 		for outIdx, out := range tx.Outputs {
 			if out.CanBeUnlocked(address) && accumulated < amount {
