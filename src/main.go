@@ -18,7 +18,7 @@ func (cli *CommandLine) printUsage() {
 	fmt.Println("\nUsage:")
 	fmt.Println(" getbalance -address ADDRESS : get the balance for an address")
 	fmt.Println(" createblockchain -address ADDRESS : create a blockchain as address mines the 1st (genesis) block")
-	fmt.Println(" send -from FROM -to TO AMOUNT : sent the amount as integer")
+	fmt.Println(" send -from FROM -to TO -amount AMOUNT : sent the amount as integer")
 	fmt.Println(" printchain - Print the blocks in the chain")
 }
 
@@ -72,7 +72,7 @@ func (cli *CommandLine) getBalance(address string) {
 	fmt.Printf("Balance of %s: %d\n", address, balance)
 }
 
-func (cli *CommandLine) send(from, to, string, amount int) {
+func (cli *CommandLine) send(from, to string, amount int) {
 	chain := blockchain.ContinueBlockchain(from)
 	defer chain.Database.Close()
 

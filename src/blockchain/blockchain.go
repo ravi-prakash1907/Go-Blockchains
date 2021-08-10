@@ -71,7 +71,7 @@ func InitBlockChain(address string) *BlockChain {
 }
 
 func ContinueBlockchain(address string) *BlockChain {
-	if DBexists() {
+	if DBexists() == false {
 		fmt.Println("Blockchain does not exists! Create it f1rst!!")
 		runtime.Goexit()
 	}
@@ -94,8 +94,8 @@ func ContinueBlockchain(address string) *BlockChain {
 	})
 	Handle(err)
 
-	blockchain := BlockChain{lastHash, db}
-	return &blockchain
+	bChain := BlockChain{lastHash, db}
+	return &bChain
 }
 
 func (chain *BlockChain) AddBlock(transactions []*Transaction) {
@@ -225,7 +225,7 @@ Work:
 				accumulated += out.Value
 				unspentOuts[txID] = append(unspentOuts[txID], outIdx)
 
-				if accumulated > amount {
+				if accumulated >= amount {
 					break Work
 				}
 			}
