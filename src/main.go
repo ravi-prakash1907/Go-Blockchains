@@ -155,6 +155,8 @@ func (cli *CommandLine) run() {
 	}
 }
 
+////////////////////////////////////////////
+
 func main() {
 	defer os.Exit(0)
 	cli := CommandLine{}
