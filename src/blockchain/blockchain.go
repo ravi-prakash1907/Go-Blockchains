@@ -94,8 +94,8 @@ func ContinueBlockchain(address string) *BlockChain {
 	})
 	Handle(err)
 
-	bChain := BlockChain{lastHash, db}
-	return &bChain
+	blockchain := BlockChain{lastHash, db}
+	return &blockchain
 }
 
 func (chain *BlockChain) AddBlock(transactions []*Transaction) {

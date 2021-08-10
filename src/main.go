@@ -16,10 +16,11 @@ type CommandLine struct{}
 
 func (cli *CommandLine) printUsage() {
 	fmt.Println("\nUsage:")
-	fmt.Println(" getbalance -address ADDRESS : get the balance for an address")
 	fmt.Println(" createblockchain -address ADDRESS : create a blockchain as address mines the 1st (genesis) block")
-	fmt.Println(" send -from FROM -to TO -amount AMOUNT : sent the amount as integer")
 	fmt.Println(" printchain - Print the blocks in the chain")
+	fmt.Println(" send -from FROM -to TO -amount AMOUNT : sent the amount as integer")
+	fmt.Println(" getbalance -address ADDRESS : get the balance for an address")
+	fmt.Println()
 }
 
 func (cli *CommandLine) validateArgs() {
@@ -55,7 +56,7 @@ func (cli *CommandLine) printChain() {
 func (cli *CommandLine) createBlockChain(address string) {
 	chain := blockchain.InitBlockChain(address)
 	chain.Database.Close()
-	fmt.Print("Blockchain created!!")
+	fmt.Print("Blockchain created!!\n")
 }
 
 func (cli *CommandLine) getBalance(address string) {
